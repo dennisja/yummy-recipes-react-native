@@ -2,6 +2,8 @@
 
 # expo
 .expo/
+.vscode
+.idea
 
 # dependencies
 /node_modules
