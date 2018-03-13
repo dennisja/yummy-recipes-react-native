@@ -1,1 +1,2 @@
 Yummy Recipes Mobile App
+<a href="https://codeclimate.com/github/dennisja/yummy-recipes-react-native/maintainability"><img src="https://api.codeclimate.com/v1/badges/e2dfee9691d1fb1a498b/maintainability" /></a>
