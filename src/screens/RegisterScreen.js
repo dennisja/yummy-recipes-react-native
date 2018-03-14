@@ -12,7 +12,7 @@ class RegisterScreen extends Component {
     c_password: '',
     loading: false,
   }
-  
+
   state = RegisterScreen.initialState;
 
   _handleSignUp = () => {
@@ -79,7 +79,7 @@ class RegisterScreen extends Component {
             title='Register'
             loading={this.state.loading}
             onPress={this._handleSignUp}
-            buttonStyle={loading ? styles.buttonStyle : {}}
+            buttonStyle={loading ? styles.buttonStyle : {paddingHorizontal: 5}}
             loadingProps={{ size: "large", color: "rgba(111, 202, 186, 1)" }}
             containerStyle={styles.buttonContainerStyle} />
 
