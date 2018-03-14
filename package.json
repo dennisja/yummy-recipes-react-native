@@ -23,6 +23,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "base-64": "^0.1.0",
     "expo": "^25.0.0",
     "prop-types": "^15.6.1",
     "react": "16.2.0",

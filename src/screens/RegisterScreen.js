@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Input, Card, Button } from 'react-native-elements';
 import { FontAwesome } from '@expo/vector-icons';
+import { registerUser } from '../api/User';
 
 class RegisterScreen extends Component {
   static initialState = {
@@ -15,9 +16,12 @@ class RegisterScreen extends Component {
 
   state = RegisterScreen.initialState;
 
-  _handleSignUp = () => {
+  _handleSignUp = async () => {
     const { loading, ...userData } = this.state;
     this.setState({ loading: true })
+    const response = await registerUser(userData);
+    console.log(response)
+    this.setState({ loading: false })
   }
 
   render() {

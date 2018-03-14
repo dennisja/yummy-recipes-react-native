@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Input, Card, Button } from 'react-native-elements';
 import CardTitle from '../components/CardTitle';
 import { FontAwesome } from '@expo/vector-icons';
+import { loginUser } from '../api/User'
 
 
 class LoginScreen extends Component {
@@ -12,10 +13,13 @@ class LoginScreen extends Component {
     loading: false,
   }
 
-  _handleSignIn = () => {
+  _handleSignIn = async () => {
     const { loading, ...loginDetails } = this.state;
     console.log(loginDetails)
     this.setState({ loading: true })
+    const response = await loginUser(loginDetails);
+    console.log(response);
+    this.setState({loading: false})
   }
 
   render() {
