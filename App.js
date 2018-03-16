@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, AsyncStorage, ActivityIndicator } from 'react-native';
-import { AppNavigator, AuthStack } from './src/components/Navigation';
+import { AppNavigator, AuthStack, NewAppNavigator } from './src/components/Navigation';
 import Token from './src/api/Token';
 
 export default class App extends React.Component {
@@ -25,7 +25,7 @@ export default class App extends React.Component {
       case false:
         return <AuthStack />
       case true:
-        return <AppNavigator />
+        return <NewAppNavigator />
     }
   }
 

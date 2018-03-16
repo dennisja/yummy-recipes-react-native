@@ -32,6 +32,7 @@ class LoginScreen extends Component {
     if(response){
       await Token.addToken(response.token)
       this.setState(LoginScreen.initialState)
+      this.props.navigation.navigate('Home')
       return;
     }
     this.setState({loading: false})
