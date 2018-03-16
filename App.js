@@ -11,7 +11,7 @@ export default class App extends React.Component {
   componentWillMount = async () => {
     const userToken = await Token.getTokenWithoutHttpCall();
     console.log(userToken);
-    if (this.state.loggedIn) {
+    if (userToken) {
       this.setState({ loggedIn: true });
       return;
     }

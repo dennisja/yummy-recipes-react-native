@@ -17,18 +17,24 @@ class RegisterScreen extends Component {
   state = RegisterScreen.initialState;
 
   _handleSignUpErrors = (errors)=>{
-    console.log(errors)
+    if('errors' in errors){
+      // erros in registration from the api
+      return;
+    }
+    // tell user request can't be made
   }
 
   _handleSignUp = async () => {
     const { loading, ...userData } = this.state;
     this.setState({ loading: true })
     const response = await registerUser(userData, this._handleSignUpErrors);
-    this.setState({ loading: false })
     if(response){
       //tell user that he has successfully registered
       console.log(response.messages)
+      this.setState(RegisterScreen.initialState)
+      return;
     }
+    this.setState({ loading: false })
   }
 
   render() {

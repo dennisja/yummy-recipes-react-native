@@ -4,25 +4,37 @@ import { Input, Card, Button } from 'react-native-elements';
 import CardTitle from '../components/CardTitle';
 import { FontAwesome } from '@expo/vector-icons';
 import { loginUser } from '../api/User'
+import Token from '../api/Token';
 
 
 class LoginScreen extends Component {
-  state = {
+  static initialState = {
     email: '',
     password: '',
     loading: false,
   }
+  state = LoginScreen.initialState
 
-  componentDidMount = () => {
-    // console.log(this.props)
-  };
+  _handleSignInErrors = (errorObject)=>{
+    if('errors' in errorObject){
+      // display errors from the api to the user
+      console.log(errorObject.errors)
+      return;
+    }
+    // tell user that request cant be made
+    console.log(errorObject.message)
+  }
 
   _handleSignIn = async () => {
     const { loading, ...loginDetails } = this.state;
     this.setState({ loading: true })
-    const response = await loginUser(loginDetails);
-    console.log(response);
-    this.setState({ loading: false })
+    const response = await loginUser(loginDetails, this._handleSignInErrors);
+    if(response){
+      await Token.addToken(response.token)
+      this.setState(LoginScreen.initialState)
+      return;
+    }
+    this.setState({loading: false})
   }
 
   render() {

@@ -54,6 +54,7 @@ export const loginUser = async (userData, errorHandler) => {
         const jsonResponse = await response.json();
         if(!response.ok){
             errorHandler(jsonResponse)
+            return;
         }
         return jsonResponse;
     }catch (error) {

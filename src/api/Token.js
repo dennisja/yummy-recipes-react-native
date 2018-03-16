@@ -20,4 +20,13 @@ export default class Token {
             return false
         }
     }
+    
+    static removeToken = async ()=>{
+        try{
+            AsyncStorage.removeItem(USER_TOKEN_KEY)
+            return true;
+        }catch(error){
+            return false;
+        }
+    }
 }
