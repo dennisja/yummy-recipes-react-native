@@ -28,6 +28,7 @@
     "prop-types": "^15.6.1",
     "react": "16.2.0",
     "react-native": "0.52.0",
-    "react-native-elements": "^1.0.0-beta3"
+    "react-native-elements": "^1.0.0-beta3",
+    "react-navigation": "^1.5.6"
   }
 }

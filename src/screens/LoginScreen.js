@@ -15,18 +15,17 @@ class LoginScreen extends Component {
 
   _handleSignIn = async () => {
     const { loading, ...loginDetails } = this.state;
-    console.log(loginDetails)
     this.setState({ loading: true })
     const response = await loginUser(loginDetails);
     console.log(response);
-    this.setState({loading: false})
+    this.setState({ loading: false })
   }
 
   render() {
     const { email, password, loading } = this.state;
 
     return (
-      <View>
+      <View style={{flex: 1, alignItems: 'center', justifyContent:'center'}}>
         <Card title={<CardTitle titleText="Login" titleIconName={'sign-in'} />}>
           <Input
             value={email}
@@ -56,6 +55,10 @@ class LoginScreen extends Component {
             buttonStyle={loading ? styles.buttonStyle : { paddingHorizontal: 5 }}
             loadingProps={{ size: "large", color: "rgba(111, 202, 186, 1)" }}
             containerStyle={styles.buttonContainerStyle} />
+
+          <View style={styles.regButton}>
+            <Button title='Dont have an account? Register' onClick={() => { navigation.navigate('Register') }} />
+          </View>
         </Card>
       </View>
     );
@@ -69,6 +72,9 @@ const styles = StyleSheet.create({
   buttonStyle: {
     paddingHorizontal: 12,
     paddingVertical: 8,
+  },
+  regButton: {
+    marginTop: 10,
   }
 })
 

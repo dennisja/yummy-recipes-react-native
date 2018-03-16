@@ -1,15 +1,39 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import LoginScreen from './src/screens/LoginScreen';
-import RegisterScreen from './src/screens/RegisterScreen';
+import { StyleSheet, Text, View, AsyncStorage, ActivityIndicator } from 'react-native';
+import { AppNavigator, AuthStack } from './src/components/Navigation';
 
 export default class App extends React.Component {
+  state = {
+    loggedIn: null,
+  }
+
+  componentWillMount = async () => {
+    // const stopAt = Date.now()+ 5000;
+    // while( Date.now() < stopAt){}
+    const userToken = await AsyncStorage.getItem('userToken');
+    if (this.state.loggedIn) {
+      this.setState({ loggedIn: true });
+      return;
+    }
+    this.setState({ loggedIn: false });
+  };
+
+  renderInitialView = () => {
+    switch (this.state.loggedIn) {
+      case null:
+        return <ActivityIndicator />
+      case false:
+        return <AuthStack />
+      case true:
+        return <AppNavigator />
+    }
+  }
+
 
   render() {
     return (
       <View style={styles.container}>
-        <LoginScreen/>
-        <RegisterScreen />
+        {this.renderInitialView()}
       </View>
     );
   }

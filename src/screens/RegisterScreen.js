@@ -26,6 +26,8 @@ class RegisterScreen extends Component {
 
   render() {
     const { loading, email, firstname, lastname, password, c_password } = this.state;
+    const {navigation} = this.props;
+
     return (
       <View>
         <Card title="Register">
@@ -86,7 +88,10 @@ class RegisterScreen extends Component {
             buttonStyle={loading ? styles.buttonStyle : {paddingHorizontal: 5}}
             loadingProps={{ size: "large", color: "rgba(111, 202, 186, 1)" }}
             containerStyle={styles.buttonContainerStyle} />
-
+            
+          <View style={styles.loginButton}>
+            <Button title='Already Have an account? Login' onClick={()=>{navigation.navigate('Login')}}/>
+          </View>
         </Card>
       </View>
     );
@@ -100,6 +105,9 @@ const styles = StyleSheet.create({
   buttonStyle: {
     paddingHorizontal: 12,
     paddingVertical: 8,
+  },
+  loginButton:{
+    marginTop: 10,
   }
 })
 
