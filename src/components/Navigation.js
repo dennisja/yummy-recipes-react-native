@@ -8,7 +8,7 @@ export const AuthStack = StackNavigator({
     Login: { screen: LoginScreen },
     Register: { screen: RegisterScreen }
 },{
-    initialRouteName: 'Login',
+    initialRouteName: 'Register',
 })
 
 const HomeStack = StackNavigator({

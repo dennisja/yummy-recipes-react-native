@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, AsyncStorage, ActivityIndicator } from 'react-native';
 import { AppNavigator, AuthStack } from './src/components/Navigation';
+import Token from './src/api/Token';
 
 export default class App extends React.Component {
   state = {
@@ -8,9 +9,8 @@ export default class App extends React.Component {
   }
 
   componentWillMount = async () => {
-    // const stopAt = Date.now()+ 5000;
-    // while( Date.now() < stopAt){}
-    const userToken = await AsyncStorage.getItem('userToken');
+    const userToken = await Token.getTokenWithoutHttpCall();
+    console.log(userToken);
     if (this.state.loggedIn) {
       this.setState({ loggedIn: true });
       return;
@@ -32,9 +32,7 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        {this.renderInitialView()}
-      </View>
+        this.renderInitialView()
     );
   }
 }

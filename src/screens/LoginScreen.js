@@ -13,6 +13,10 @@ class LoginScreen extends Component {
     loading: false,
   }
 
+  componentDidMount = () => {
+    // console.log(this.props)
+  };
+
   _handleSignIn = async () => {
     const { loading, ...loginDetails } = this.state;
     this.setState({ loading: true })
@@ -25,7 +29,7 @@ class LoginScreen extends Component {
     const { email, password, loading } = this.state;
 
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent:'center'}}>
+      <View style={styles.container}>
         <Card title={<CardTitle titleText="Login" titleIconName={'sign-in'} />}>
           <Input
             value={email}
@@ -57,7 +61,7 @@ class LoginScreen extends Component {
             containerStyle={styles.buttonContainerStyle} />
 
           <View style={styles.regButton}>
-            <Button title='Dont have an account? Register' onClick={() => { navigation.navigate('Register') }} />
+            <Button title='Dont have an account? Register' onPress={() => { this.props.navigation.navigate('Register') }} />
           </View>
         </Card>
       </View>
@@ -66,6 +70,7 @@ class LoginScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   buttonContainerStyle: {
     marginTop: 20,
   },

@@ -16,20 +16,26 @@ class RegisterScreen extends Component {
 
   state = RegisterScreen.initialState;
 
+  _handleSignUpErrors = (errors)=>{
+    console.log(errors)
+  }
+
   _handleSignUp = async () => {
     const { loading, ...userData } = this.state;
     this.setState({ loading: true })
-    const response = await registerUser(userData);
-    console.log(response)
+    const response = await registerUser(userData, this._handleSignUpErrors);
     this.setState({ loading: false })
+    if(response){
+      //tell user that he has successfully registered
+      console.log(response.messages)
+    }
   }
 
   render() {
     const { loading, email, firstname, lastname, password, c_password } = this.state;
-    const {navigation} = this.props;
 
     return (
-      <View>
+      <View style={styles.container}>
         <Card title="Register">
           <Input placeholder='firstname'
             leftIcon={<FontAwesome name="user" size={24} />}
@@ -85,12 +91,12 @@ class RegisterScreen extends Component {
             title='Register'
             loading={this.state.loading}
             onPress={this._handleSignUp}
-            buttonStyle={loading ? styles.buttonStyle : {paddingHorizontal: 5}}
+            buttonStyle={loading ? styles.buttonStyle : { paddingHorizontal: 5 }}
             loadingProps={{ size: "large", color: "rgba(111, 202, 186, 1)" }}
             containerStyle={styles.buttonContainerStyle} />
-            
+
           <View style={styles.loginButton}>
-            <Button title='Already Have an account? Login' onClick={()=>{navigation.navigate('Login')}}/>
+            <Button title='Already Have an account? Login' onPress={() => this.props.navigation.navigate('Login')} />
           </View>
         </Card>
       </View>
@@ -99,6 +105,7 @@ class RegisterScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   buttonContainerStyle: {
     marginTop: 20,
   },
@@ -106,7 +113,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 8,
   },
-  loginButton:{
+  loginButton: {
     marginTop: 10,
   }
 })

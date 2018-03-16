@@ -11,8 +11,9 @@ const { baseUrl, registerUrl, loginUrl} = Configs.api;
 /**
  * 
  * @param {oject} userData An object containing necessary data to register a user i.e {email, password, firstname, lastname, c_password}
+ * @param {function} errorHandler The function to handle errors in our application
  */
-export const registerUser = async (userData) => {
+export const registerUser = async (userData, errorHandler) => {
     try {
         const response = await fetch(`${baseUrl + registerUrl}`, {
             method: 'POST',
@@ -21,11 +22,14 @@ export const registerUser = async (userData) => {
                 'Content-Type': 'application/json',
             }
         })
-
         const jsonResponse = await response.json();
+        if(!response.ok){
+            errorHandler(jsonResponse)
+            return;
+        }
         return jsonResponse;
     } catch (error) {
-        console.log(error);
+        errorHandler(error);
     }
 }
 
@@ -33,8 +37,9 @@ export const registerUser = async (userData) => {
 /**
  * 
  * @param {object} userData An object containing login details of a user i.e email and password
+ * @param {object} errorHandler A callback function to handle errors that result from the application
  */
-export const loginUser = async (userData) => {
+export const loginUser = async (userData, errorHandler) => {
     try {
         
         const {email:username, password} = userData;
@@ -47,8 +52,11 @@ export const loginUser = async (userData) => {
             }
         })
         const jsonResponse = await response.json();
+        if(!response.ok){
+            errorHandler(jsonResponse)
+        }
         return jsonResponse;
     }catch (error) {
-        console.log(error)
+        errorHandler(error)
     }
 }
