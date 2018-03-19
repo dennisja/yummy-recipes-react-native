@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { Input, Card, Button } from 'react-native-elements';
-import CardTitle from '../components/CardTitle';
+import PropTypes from 'prop-types';
+
 import { FontAwesome } from '@expo/vector-icons';
+import CardTitle from '../components/CardTitle';
 import { loginUser } from '../api/User'
 import Token from '../api/Token';
 
@@ -13,6 +15,11 @@ class LoginScreen extends Component {
     password: '',
     loading: false,
   }
+
+  static contextTypes = {
+    loginUser: PropTypes.func,
+  }
+
   state = LoginScreen.initialState
 
   _handleSignInErrors = (errorObject)=>{
@@ -32,7 +39,7 @@ class LoginScreen extends Component {
     if(response){
       await Token.addToken(response.token)
       this.setState(LoginScreen.initialState)
-      this.props.navigation.navigate('Home')
+      this.context.loginUser()
       return;
     }
     this.setState({loading: false})
@@ -42,7 +49,7 @@ class LoginScreen extends Component {
     const { email, password, loading } = this.state;
 
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container} behavior="padding">
         <Card title={<CardTitle titleText="Login" titleIconName={'sign-in'} />}>
           <Input
             value={email}
@@ -77,7 +84,7 @@ class LoginScreen extends Component {
             <Button title='Dont have an account? Register' onPress={() => { this.props.navigation.navigate('Register') }} />
           </View>
         </Card>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }

@@ -4,6 +4,7 @@ import RegisterScreen from '../screens/RegisterScreen';
 import HomeScreen from '../screens/HomeScreen';
 import RecipesScreen from '../screens/RecipesScreen';
 import DrawerMenu from './DrawerMenu';
+import CategoriesScreen from '../screens/CategoriesScreen';
 
 export const AuthStack = StackNavigator({
     Login: { screen: LoginScreen },
@@ -20,9 +21,14 @@ const RecipesStack = StackNavigator({
     Recipes: { screen: RecipesScreen }
 })
 
+const CategoriesStack = StackNavigator({
+    Categories: {screen: CategoriesScreen}
+})
+
 export const NewAppNavigator = DrawerNavigator({
     Home: {screen: HomeStack},
     Recipes: {screen: RecipesStack},
+    Categories: {screen: CategoriesStack}
 },{
     initialRouteName:'Home',
     contentComponent: DrawerMenu,
@@ -34,6 +40,7 @@ export const NewAppNavigator = DrawerNavigator({
 export const AppNavigator = TabNavigator({
     Home: { screen: HomeStack },
     Recipes: { screen: RecipesStack },
+    Categories: {screen: CategoriesStack}
 },{
     initialRouteName: 'Home',
     

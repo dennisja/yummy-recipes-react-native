@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { Input, Card, Button } from 'react-native-elements';
 import { FontAwesome } from '@expo/vector-icons';
 import { registerUser } from '../api/User';
@@ -41,7 +41,7 @@ class RegisterScreen extends Component {
     const { loading, email, firstname, lastname, password, c_password } = this.state;
 
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container} behavior="padding">
         <Card title="Register">
           <Input placeholder='firstname'
             leftIcon={<FontAwesome name="user" size={24} />}
@@ -105,7 +105,7 @@ class RegisterScreen extends Component {
             <Button title='Already Have an account? Login' onPress={() => this.props.navigation.navigate('Login')} />
           </View>
         </Card>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
