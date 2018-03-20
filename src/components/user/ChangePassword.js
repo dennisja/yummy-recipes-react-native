@@ -1,14 +1,83 @@
-import React, { Component } from 'react';
-import { View, Text,  } from 'react-native';
+import React, { Component } from 'react'
+import { Text, KeyboardAvoidingView, StyleSheet } from 'react-native'
+import { Icon, Button, Input, Card } from 'react-native-elements'
 
 class ChangePassword extends Component {
-  render() {
+  state = {
+    current_password: '',
+    new_password: '',
+    new_password_again: '',
+    loading: false
+  }
+
+  _handleChangePassword = () => {}
+
+  render () {
+    const {
+      current_password,
+      new_password,
+      new_password_again,
+      loading
+    } = this.state
     return (
-      <View>
-        <Text> Change Password </Text>
-      </View>
-    );
+      <KeyboardAvoidingView style={styles.container} behavior='padding'>
+        <Card title='ChangePassword'>
+          <Input
+            placeholder='current password'
+            leftIcon={<Icon name='lock' type='font-awesome' size={24} />}
+            secureTextEntry
+            returnKeyType='next'
+            onSubmitEditing={() => this._newPasswordField.focus()}
+            onChangeText={current_password =>
+              this.setState({ current_password })}
+            value={current_password}
+          />
+          <Input
+            placeholder='new password'
+            leftIcon={<Icon name='lock' type='font-awesome' size={24} />}
+            secureTextEntry
+            returnKeyType='next'
+            ref={view => (this._newPasswordField = view)}
+            onSubmitEditing={() => this._confirmNewPasswordField.focus()}
+            onChangeText={new_password => this.setState({ new_password_again })}
+            value={new_password}
+          />
+          <Input
+            placeholder='confirm new password'
+            leftIcon={<Icon name='lock' type='font-awesome' size={24} />}
+            secureTextEntry
+            returnKeyType='next'
+            ref={view => (this._confirmNewPasswordField = view)}
+            onChangeText={new_password_again =>
+              this.setState({ new_password_again })}
+            value={new_password_again}
+          />
+
+          <Button
+            title='Edit Profile'
+            loading={this.state.loading}
+            onPress={this._handleChangePassword}
+            buttonStyle={
+              loading ? styles.buttonStyle : { paddingHorizontal: 5 }
+            }
+            loadingProps={{ size: 'large', color: 'rgba(111, 202, 186, 1)' }}
+            containerStyle={styles.buttonContainerStyle}
+          />
+        </Card>
+      </KeyboardAvoidingView>
+    )
   }
 }
 
-export default ChangePassword;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  buttonContainerStyle: {
+    marginTop: 20
+  }
+})
+
+export default ChangePassword
