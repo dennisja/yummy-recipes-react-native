@@ -19,9 +19,11 @@ class RegisterScreen extends Component {
   _handleSignUpErrors = (errors)=>{
     if('errors' in errors){
       // erros in registration from the api
+      console.log(errors)
       return;
     }
     // tell user request can't be made
+    console.log(errors)
   }
 
   _handleSignUp = async () => {

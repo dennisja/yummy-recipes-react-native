@@ -1,6 +1,3 @@
 module.exports = {
-    "extends": "airbnb",
-    "rules":{
-    
-    }
+    "extends": "airbnb"
 };
