@@ -1,26 +1,38 @@
-import React, { Component } from 'react';
-import { View, Text, } from 'react-native';
-import { Icon } from 'react-native-elements';
-import Token from '../api/Token';
+import React, { Component } from 'react'
+import { View, Text, StyleSheet } from 'react-native'
+import { Icon, Header } from 'react-native-elements'
+import Token from '../api/Token'
 class HomeScreen extends Component {
   static navigationOptions = {
-    drawerIcon: ({tintColor})=>(
-      <Icon name='home' size={24} color={tintColor}/>
-    )
+    drawerIcon: ({ tintColor }) => (
+      <Icon name='home' size={24} color={tintColor} />
+    ),
+    header: null,
   }
 
   componentDidMount = async () => {
     console.log(await Token.getTokenWithoutHttpCall())
-  };
-  
-  render() {
+  }
+
+  render () {
     return (
-      <View>
-        <Text onPress={()=>this.props.navigation.navigate('Recipes')}> Home </Text>
-        <Text onPress={()=>this.props.navigation.navigate('DrawerOpen')}>Open `drawer</Text>
+      <View style={styles.container}>
+        <Header
+          leftComponent={{ icon: 'menu', color: '#fff', onPress: ()=>this.props.navigation.navigate('DrawerOpen') }}
+          centerComponent={{ text: 'Home', style: { color: '#fff' } }}
+        />
+        <Text onPress={() => this.props.navigation.navigate('Recipes')}>
+          {' '}Home{' '}
+        </Text>
       </View>
-    );
+    )
   }
 }
 
-export default HomeScreen;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  }
+})
+
+export default HomeScreen

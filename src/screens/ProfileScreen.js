@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { View, Text } from 'react-native'
-import { FontAwesome } from '@expo/vector-icons'
-import {Header} from 'react-native-elements';
-class CategoriesScreen extends Component {
+import { Icon, Header } from 'react-native-elements'
+
+class ProfileScreen extends Component {
   static navigationOptions = {
     drawerIcon: ({ tintColor }) => (
-      <FontAwesome name='tags' size={24} color={tintColor} />
+      <Icon color={tintColor} name='user' type='font-awesome' />
     ),
-    header: null,
+    header: null
   }
   render () {
     return (
@@ -18,12 +18,13 @@ class CategoriesScreen extends Component {
             color: '#fff',
             onPress: () => this.props.navigation.navigate('DrawerOpen')
           }}
-          centerComponent={{ text: 'Categories', style: { color: '#fff' } }}
+          centerComponent={{ text: 'Profile', style: {color: '#fff'} }}
         />
-        <Text> Categories screen </Text>
+
+        <Text> Profile Screen </Text>
       </View>
     )
   }
 }
 
-export default CategoriesScreen
+export default ProfileScreen
