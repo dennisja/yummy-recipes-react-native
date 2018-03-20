@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { View, Text, StyleSheet } from 'react-native'
 import { Button, Icon, Avatar } from 'react-native-elements'
 
-const UserIntro = ({ userData }) => (
+const UserIntro = ({ userData, onEditProfileClick, onChangePasswordClick }) => (
   <View style={styles.basicInfoContainer}>
     <View style={styles.imageContainer}>
       <Avatar rounded large icon={{ name: 'user', type: 'font-awesome' }} />
@@ -19,20 +19,24 @@ const UserIntro = ({ userData }) => (
           type='font-awesome'
           name='edit'
           size={24}
-          onPress={() => alert('Edit Profile')}
+          onPress={onEditProfileClick}
         />
         <Button
           title='Change Password'
           clear
           titleStyle={{ color: 'blue' }}
-          onPress={() => alert('Change Password')}
+          onPress={onChangePasswordClick}
         />
       </View>
     </View>
   </View>
 )
 
-UserIntro.propTypes = {}
+UserIntro.propTypes = {
+    userData: PropTypes.object.isRequired,
+    onChangePasswordClick: PropTypes.func.isRequired,
+    onEditProfileClick: PropTypes.func.isRequired,
+}
 
 const styles = StyleSheet.create({
   image: {

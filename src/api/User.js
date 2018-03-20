@@ -15,7 +15,7 @@ const headers = {
 
 /**
  * Registers a user
- * @param {oject} userData An object containing necessary data to register a user i.e {email, password, firstname, lastname, c_password}
+ * @param {Object} userData An object containing necessary data to register a user i.e {email, password, firstname, lastname, c_password}
  * @param {function} errorHandler The function to handle errors in our application
  */
 export const registerUser = async (userData, errorHandler) => {
@@ -89,7 +89,7 @@ export const getUserData = async (userId, errorHandler) => {
 
 /**
  * Edits userdata
- * @param {object} newUserData An object containing the new user data
+ * @param {Object} newUserData An object containing the new user data
  * @param {function} errorHandler A function to handle errors that occur
  */
 export const editUserData = async (newUserData, errorHandler) => {
@@ -115,7 +115,7 @@ export const editUserData = async (newUserData, errorHandler) => {
 
 /**
  * Changes user password
- * @param {object} newPasswordData An object containing user data
+ * @param {Object} newPasswordData An object containing user data
  * @param {function} errorHandler A function to handle errors that occur
  */
 export const changeUserPassword = async (newPasswordData, errorHandler) => {
@@ -124,13 +124,13 @@ export const changeUserPassword = async (newPasswordData, errorHandler) => {
     const response = await fetch(`${userUrl}`, {
       method: 'PATCH',
       body: JSON.stringify(newPasswordData),
-      headers
+      headers,
     })
-    const jsonResponse = response.json()
+    const jsonResponse = await response.json()
 
     if (!response.ok) {
       errorHandler(jsonResponse)
-      return
+      return;
     }
     return jsonResponse
   } catch (error) {

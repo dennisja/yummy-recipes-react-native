@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, KeyboardAvoidingView } from 'react-native'
 import { Input, Icon, Card, Button } from 'react-native-elements'
-
+import { editUserData } from '../../api/User';
 class EditProfile extends Component {
   state = {
     firstname: '',
@@ -10,7 +10,27 @@ class EditProfile extends Component {
     loading: false
   }
 
-  _handleEditProfile = () => {}
+  _handleEditErrors = (errors)=>{
+    if('errors' in errors){
+      // erros in registration from the api
+      console.log(errors)
+      return;
+    }
+    // tell user request can't be made
+    console.log(errors)
+  }
+
+  _handleEditProfile = async () => {
+    const {firstname, lastname, email} = this.state
+    this.setState({loading: true})
+    const response = await editUserData({firstname, lastname, email}, this._handleEditErrors)
+    this.setState({ loading: false })
+    if(response){
+      //tell user that he has successfully registered
+      this.props.onEditUserData(response)
+      return;
+    }
+  }
 
   render () {
     const { firstname, lastname, email, loading } = this.state
@@ -47,6 +67,8 @@ class EditProfile extends Component {
             placeholder='email'
             leftIcon={<Icon name='envelope' size={18} type='font-awesome' />}
             autoCapitalize='none'
+            keyboardType='email-address'
+            autoCorrect={false}
             ref={view => (this._emailField = view)}
             onChangeText={email => this.setState({ email })}
             value={email}

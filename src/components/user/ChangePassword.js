@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Text, KeyboardAvoidingView, StyleSheet } from 'react-native'
 import { Icon, Button, Input, Card } from 'react-native-elements'
-
+import { changeUserPassword } from '../../api/User'
 class ChangePassword extends Component {
   state = {
     current_password: '',
@@ -10,7 +10,28 @@ class ChangePassword extends Component {
     loading: false
   }
 
-  _handleChangePassword = () => {}
+  _handleErrors = (errors)=>{
+    if('errors' in errors){
+      // erros in registration from the api
+    //   const { errors } = errors
+      console.log(errors)
+      return;
+    }
+    // tell user request can't be made
+    console.log(errors)
+  }
+
+  _handleChangePassword = async () => {
+      const { current_password, new_password, new_password_again} = this.state;
+      this.setState({loading: true})
+      const response = await changeUserPassword({current_password, new_password, new_password_again}, this._handleErrors);
+      this.setState({loading: false})
+      if(response){
+          this.props.onChangePassword(response)
+          return;
+      }
+      
+  }
 
   render () {
     const {
@@ -39,7 +60,7 @@ class ChangePassword extends Component {
             returnKeyType='next'
             ref={view => (this._newPasswordField = view)}
             onSubmitEditing={() => this._confirmNewPasswordField.focus()}
-            onChangeText={new_password => this.setState({ new_password_again })}
+            onChangeText={new_password => this.setState({ new_password })}
             value={new_password}
           />
           <Input
