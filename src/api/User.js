@@ -14,17 +14,29 @@ const headers = {
 }
 
 /**
+ *
+ * @param {object} data The data to send to the web service
+ * @param {string} url The end point where dat is to be sent
+ * @param {string} method The method used to send data. It defaults to POST
+ */
+const sendData = async (data, url, method = 'POST') => {
+  headers['x-access-token'] = await Token.getTokenWithoutHttpCall()
+  const response = await fetch(url, {
+    method,
+    body: JSON.stringify(data),
+    headers
+  })
+  return response
+}
+
+/**
  * Registers a user
  * @param {Object} userData An object containing necessary data to register a user i.e {email, password, firstname, lastname, c_password}
  * @param {function} errorHandler The function to handle errors in our application
  */
 export const registerUser = async (userData, errorHandler) => {
   try {
-    const response = await fetch(`${baseUrl + registerUrl}`, {
-      method: 'POST',
-      body: JSON.stringify(userData),
-      headers
-    })
+    const response = await sendData(userData, `${baseUrl + registerUrl}`, "POST")
     const jsonResponse = await response.json()
     if (!response.ok) {
       errorHandler(jsonResponse)
@@ -66,7 +78,7 @@ export const loginUser = async (userData, errorHandler) => {
 /**
  * Gets user data from the api
  * @param {number} userId The id of the user whose data is required
- * @param {function} errorHandler The function to handle errors that occur 
+ * @param {function} errorHandler The function to handle errors that occur
  */
 export const getUserData = async (userId, errorHandler) => {
   try {
@@ -94,12 +106,7 @@ export const getUserData = async (userId, errorHandler) => {
  */
 export const editUserData = async (newUserData, errorHandler) => {
   try {
-    headers['x-access-token'] = await Token.getTokenWithoutHttpCall()
-    const response = await fetch(`${userUrl}`, {
-      method: 'PUT',
-      body: JSON.stringify(newUserData),
-      headers
-    })
+    const response = await sendData(newUserData, userUrl, 'PUT')
     const jsonResponse = await response.json()
 
     if (!response.ok) {
@@ -121,16 +128,12 @@ export const editUserData = async (newUserData, errorHandler) => {
 export const changeUserPassword = async (newPasswordData, errorHandler) => {
   try {
     headers['x-access-token'] = await Token.getTokenWithoutHttpCall()
-    const response = await fetch(`${userUrl}`, {
-      method: 'PATCH',
-      body: JSON.stringify(newPasswordData),
-      headers,
-    })
+    const response = await sendData(newPasswordData, userUrl, 'PATCH')
     const jsonResponse = await response.json()
 
     if (!response.ok) {
       errorHandler(jsonResponse)
-      return;
+      return
     }
     return jsonResponse
   } catch (error) {

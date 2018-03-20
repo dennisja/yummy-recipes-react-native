@@ -4,9 +4,9 @@ import { Input, Icon, Card, Button } from 'react-native-elements'
 import { editUserData } from '../../api/User'
 class EditProfile extends Component {
   state = {
-    firstname: '',
-    lastname: '',
-    email: '',
+    firstname: this.props.userData.firstname,
+    lastname: this.props.userData.lastname,
+    email: this.props.userData.email,
     loading: false
   }
 

@@ -7,7 +7,7 @@ import {
   Modal,
   AsyncStorage
 } from 'react-native'
-import { Constants } from 'expo';
+import { Constants } from 'expo'
 import { Icon, Header } from 'react-native-elements'
 import Token from '../api/Token'
 import ProfileInfo from '../components/user/ProfileInfo'
@@ -75,7 +75,7 @@ class ProfileScreen extends Component {
     })
   }
 
-  _handleModalClose = ()=>{
+  _handleModalClose = () => {
     this.setState({
       showModal: false,
       elementToShow: null
@@ -85,9 +85,22 @@ class ProfileScreen extends Component {
   renderForm = () => {
     switch (this.state.elementToShow) {
       case 'edit-profile':
-        return <EditProfile onEditUserData={this.onEditUserData} isInModal={true} closeModal={this._handleModalClose}/>
+        return (
+          <EditProfile
+            onEditUserData={this.onEditUserData}
+            isInModal
+            closeModal={this._handleModalClose}
+            userData={this.state.userData}
+          />
+        )
       case 'change-password':
-        return <ChangePassword onChangePassword={this.onChangePassword} isInModal={true} closeModal={this._handleModalClose}/>
+        return (
+          <ChangePassword
+            onChangePassword={this.onChangePassword}
+            isInModal
+            closeModal={this._handleModalClose}
+          />
+        )
       default:
         return null
     }
@@ -98,7 +111,7 @@ class ProfileScreen extends Component {
 
     return (
       <View style={styles.container}>
-        <View style={{height: Constants.statusBarHeight}}/>
+        <View style={{ height: Constants.statusBarHeight }} />
         <Header
           leftComponent={{
             icon: 'menu',
@@ -145,7 +158,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject, // means the same as the commented styles below
     backgroundColor: 'transparent',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   }
 })
 

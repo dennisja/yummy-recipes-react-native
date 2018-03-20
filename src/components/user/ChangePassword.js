@@ -77,7 +77,7 @@ class ChangePassword extends Component {
           />
 
           <Button
-            title='Edit Profile'
+            title='Change Password'
             loading={this.state.loading}
             onPress={this._handleChangePassword}
             buttonStyle={
