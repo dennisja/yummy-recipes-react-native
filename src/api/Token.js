@@ -15,7 +15,7 @@ export default class Token {
     static addToken = async (data)=>{
         try {
             await AsyncStorage.setItem(USER_TOKEN_KEY, data.token)
-            await AsyncStorage.setItem(USER_DATA_KEY, data.data)
+            await AsyncStorage.setItem(USER_DATA_KEY, JSON.stringify(data.data))
             return true;
         } catch (error) {
             // add error to error logs
@@ -34,7 +34,7 @@ export default class Token {
 
     static getUserData = async ()=>{
         try {
-            return await AsyncStorage.getItem(USER_DATA_KEY);
+            return JSON.parse(await AsyncStorage.getItem(USER_DATA_KEY));
         } catch (error) {
             return null;
         }

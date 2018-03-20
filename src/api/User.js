@@ -14,7 +14,7 @@ const headers = {
 }
 
 /**
- *
+ * Registers a user
  * @param {oject} userData An object containing necessary data to register a user i.e {email, password, firstname, lastname, c_password}
  * @param {function} errorHandler The function to handle errors in our application
  */
@@ -37,7 +37,7 @@ export const registerUser = async (userData, errorHandler) => {
 }
 
 /**
- *
+ * Logs in a user
  * @param {object} userData An object containing login details of a user i.e email and password
  * @param {object} errorHandler A callback function to handle errors that result from the application
  */
@@ -64,7 +64,7 @@ export const loginUser = async (userData, errorHandler) => {
 }
 
 /**
- * 
+ * Gets user data from the api
  * @param {number} userId The id of the user whose data is required
  * @param {function} errorHandler The function to handle errors that occur 
  */
@@ -88,7 +88,7 @@ export const getUserData = async (userId, errorHandler) => {
 }
 
 /**
- * 
+ * Edits userdata
  * @param {object} newUserData An object containing the new user data
  * @param {function} errorHandler A function to handle errors that occur
  */
@@ -114,7 +114,7 @@ export const editUserData = async (newUserData, errorHandler) => {
 }
 
 /**
- * 
+ * Changes user password
  * @param {object} newPasswordData An object containing user data
  * @param {function} errorHandler A function to handle errors that occur
  */
