@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, KeyboardAvoidingView, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet } from 'react-native'
 import { Icon, Button, Input, Card } from 'react-native-elements'
 import { changeUserPassword } from '../../api/User'
 class ChangePassword extends Component {
@@ -10,27 +10,28 @@ class ChangePassword extends Component {
     loading: false
   }
 
-  _handleErrors = (errors)=>{
-    if('errors' in errors){
+  _handleErrors = errors => {
+    if ('errors' in errors) {
       // erros in registration from the api
-    //   const { errors } = errors
+      //   const { errors } = errors
       console.log(errors)
-      return;
+      return
     }
     // tell user request can't be made
     console.log(errors)
   }
 
   _handleChangePassword = async () => {
-      const { current_password, new_password, new_password_again} = this.state;
-      this.setState({loading: true})
-      const response = await changeUserPassword({current_password, new_password, new_password_again}, this._handleErrors);
-      this.setState({loading: false})
-      if(response){
-          this.props.onChangePassword(response)
-          return;
-      }
-      
+    const { current_password, new_password, new_password_again } = this.state
+    this.setState({ loading: true })
+    const response = await changeUserPassword(
+      { current_password, new_password, new_password_again },
+      this._handleErrors
+    )
+    this.setState({ loading: false })
+    if (response) {
+      this.props.onChangePassword(response)
+    }
   }
 
   render () {
@@ -40,8 +41,9 @@ class ChangePassword extends Component {
       new_password_again,
       loading
     } = this.state
+    const { isInModal, closeModal } = this.props
     return (
-      <KeyboardAvoidingView style={styles.container} behavior='padding'>
+      <View style={styles.container} behavior='padding'>
         <Card title='ChangePassword'>
           <Input
             placeholder='current password'
@@ -84,8 +86,16 @@ class ChangePassword extends Component {
             loadingProps={{ size: 'large', color: 'rgba(111, 202, 186, 1)' }}
             containerStyle={styles.buttonContainerStyle}
           />
+
+          {isInModal &&
+            <Button
+              clear
+              title='Close'
+              onPress={closeModal}
+              titleStyle={{ color: 'blue' }}
+            />}
         </Card>
-      </KeyboardAvoidingView>
+      </View>
     )
   }
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, KeyboardAvoidingView } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import { Input, Icon, Card, Button } from 'react-native-elements'
-import { editUserData } from '../../api/User';
+import { editUserData } from '../../api/User'
 class EditProfile extends Component {
   state = {
     firstname: '',
@@ -10,33 +10,36 @@ class EditProfile extends Component {
     loading: false
   }
 
-  _handleEditErrors = (errors)=>{
-    if('errors' in errors){
+  _handleEditErrors = errors => {
+    if ('errors' in errors) {
       // erros in registration from the api
       console.log(errors)
-      return;
+      return
     }
     // tell user request can't be made
     console.log(errors)
   }
 
   _handleEditProfile = async () => {
-    const {firstname, lastname, email} = this.state
-    this.setState({loading: true})
-    const response = await editUserData({firstname, lastname, email}, this._handleEditErrors)
+    const { firstname, lastname, email } = this.state
+    this.setState({ loading: true })
+    const response = await editUserData(
+      { firstname, lastname, email },
+      this._handleEditErrors
+    )
     this.setState({ loading: false })
-    if(response){
-      //tell user that he has successfully registered
+    if (response) {
+      // tell user that he has successfully registered
       this.props.onEditUserData(response)
-      return;
     }
   }
 
   render () {
     const { firstname, lastname, email, loading } = this.state
+    const { isInModal, closeModal } = this.props
 
     return (
-      <KeyboardAvoidingView style={styles.container} behavior="padding">
+      <View style={styles.container} behavior='padding'>
         <Card title='Edit Profile'>
           <Input
             placeholder='firstname'
@@ -83,8 +86,16 @@ class EditProfile extends Component {
             loadingProps={{ size: 'large', color: 'rgba(111, 202, 186, 1)' }}
             containerStyle={styles.buttonContainerStyle}
           />
+
+          {isInModal &&
+            <Button
+              clear
+              title='Close'
+              onPress={closeModal}
+              titleStyle={{ color: 'blue' }}
+            />}
         </Card>
-      </KeyboardAvoidingView>
+      </View>
     )
   }
 }
@@ -93,7 +104,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   buttonContainerStyle: {
     marginTop: 15

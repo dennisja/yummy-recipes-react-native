@@ -1,5 +1,13 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, ScrollView, Modal, AsyncStorage } from 'react-native'
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Modal,
+  AsyncStorage
+} from 'react-native'
+import { Constants } from 'expo';
 import { Icon, Header } from 'react-native-elements'
 import Token from '../api/Token'
 import ProfileInfo from '../components/user/ProfileInfo'
@@ -54,7 +62,10 @@ class ProfileScreen extends Component {
       userData: responseData['new_user_details']
     })
     // update user data in async storage
-    AsyncStorage.setItem('userData', JSON.stringify(responseData['new_user_details']))
+    AsyncStorage.setItem(
+      'userData',
+      JSON.stringify(responseData['new_user_details'])
+    )
   }
 
   onEditUserDataClick = () => {
@@ -64,12 +75,19 @@ class ProfileScreen extends Component {
     })
   }
 
+  _handleModalClose = ()=>{
+    this.setState({
+      showModal: false,
+      elementToShow: null
+    })
+  }
+
   renderForm = () => {
     switch (this.state.elementToShow) {
       case 'edit-profile':
-        return <EditProfile onEditUserData={this.onEditUserData} />
+        return <EditProfile onEditUserData={this.onEditUserData} isInModal={true} closeModal={this._handleModalClose}/>
       case 'change-password':
-        return <ChangePassword onChangePassword={this.onChangePassword} />
+        return <ChangePassword onChangePassword={this.onChangePassword} isInModal={true} closeModal={this._handleModalClose}/>
       default:
         return null
     }
@@ -80,6 +98,7 @@ class ProfileScreen extends Component {
 
     return (
       <View style={styles.container}>
+        <View style={{height: Constants.statusBarHeight}}/>
         <Header
           leftComponent={{
             icon: 'menu',
@@ -97,13 +116,17 @@ class ProfileScreen extends Component {
           onEditProfileClick={this.onEditUserDataClick}
           onChangePasswordClick={this.onChangePasswordClick}
         />
-
-        <ScrollView>
-          <ProfileInfo {...userData} />
-          <Modal visible={showModal} transparent animationType='slide'>
-            {this.renderForm()}
-          </Modal>
-        </ScrollView>
+        <ProfileInfo {...userData} />
+        <Modal
+          style={styles.modal}
+          visible={showModal}
+          transparent
+          animationType='slide'
+          onRequestClose={this._handleModalClose}
+        >
+          <View style={styles.modalBackground} />
+          {this.renderForm()}
+        </Modal>
       </View>
     )
   }
@@ -113,6 +136,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ddd'
+  },
+  modalBackground: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.5)'
+  },
+  modal: {
+    ...StyleSheet.absoluteFillObject, // means the same as the commented styles below
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 })
 
