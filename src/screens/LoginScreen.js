@@ -37,7 +37,7 @@ class LoginScreen extends Component {
     this.setState({ loading: true })
     const response = await loginUser(loginDetails, this._handleSignInErrors);
     if(response){
-      await Token.addToken(response.token)
+      await Token.addToken(response)
       this.setState(LoginScreen.initialState)
       this.context.loginUser()
       return;
