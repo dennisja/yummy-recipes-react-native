@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, Text } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 import {Header} from 'react-native-elements';
+import { getCategories, getCategory } from '../api/Categories';
 class CategoriesScreen extends Component {
   static navigationOptions = {
     drawerIcon: ({ tintColor }) => (
@@ -9,6 +10,16 @@ class CategoriesScreen extends Component {
     ),
     header: null,
   }
+
+  handleErrors(errors){
+    console.log(errors);
+  }
+
+  componentDidMount = async () => {
+    const response = await getCategories(this.handleErrors)
+    console.log(await getCategory(19, this.handleErrors));
+  };
+  
   render () {
     return (
       <View>

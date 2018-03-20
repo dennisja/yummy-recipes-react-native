@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text,  } from 'react-native';
 import { Icon, Header } from 'react-native-elements'
+
+import { getRecipe, getRecipes } from '../api/Recipes';
 class RecipesScreen extends Component {
   static navigationOptions = {
     drawerIcon: ({tintColor})=>(
@@ -8,6 +10,16 @@ class RecipesScreen extends Component {
     ),
     header: null,
   }
+
+  handleErrors = (errors)=>{
+    console.log(errors)
+  }
+
+  componentDidMount = async () => {
+    console.log(await getRecipes(this.handleErrors))
+    console.log(await getRecipe(6, this.handleErrors))
+  };
+  
   render() {
     
     return (
