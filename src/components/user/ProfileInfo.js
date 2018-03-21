@@ -1,17 +1,26 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, View, Text } from 'react-native'
+import TimeAgo from 'react-native-timeago'
 
-const Row = props => (
-  <View style={styles.rowContainer}>
+export const Row = props => (
+  <View style={[styles.rowContainer, props.containerStyle]}>
     <Text style={[styles.text, styles.titleText]}>{props.title}:{' '}</Text>
-    <Text style={[styles.text, styles.valueText]}>{props.value}</Text>
+    {!props.isTime
+      ? <Text style={[styles.text, styles.valueText]}>{props.value}</Text>
+      : <TimeAgo time={props.value} style={[styles.text, styles.valueText]} />}
   </View>
 )
 
 Row.propTypes = {
   title: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired
+  value: PropTypes.string.isRequired,
+  isTime: PropTypes.bool
+}
+
+Row.defaultProps = {
+  isTime: false,
+  containerStyle: {},
 }
 
 const ProfileInfo = props => {

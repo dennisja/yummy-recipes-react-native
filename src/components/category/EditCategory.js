@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 import { View } from 'react-native'
 import CategoryForm from './CategoryForm'
 import { editCategory } from '../../api/Categories'
 
 class EditCategory extends Component {
-
   static propTypes = {
     categoryName: PropTypes.string.isRequired,
-    categoryId: PropTypes.number.isRequired,
+    categoryId: PropTypes.number.isRequired
   }
 
   state = { cat_name: this.props.categoryName, loading: false }
@@ -25,12 +24,10 @@ class EditCategory extends Component {
       this.props.categoryId,
       this._handleEditErrors
     )
-    await this.setState({loading: false})
-    if(response){
-      console.log(response)
-      return;
+    await this.setState({ loading: false })
+    if (response) {
+      this.props.handleEditCategory(response)
     }
-    
   }
 
   _handleNameChange = async cat_name => {

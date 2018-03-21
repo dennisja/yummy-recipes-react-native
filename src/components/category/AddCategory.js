@@ -20,7 +20,7 @@ class AddCategory extends Component {
     const response = await createCategory({cat_name}, this._handleAddCategoryErrors)
     if(response){
         // tell user that he or she has successfuly added a category
-        console.log(response);
+        this.props.onAddCategory(response)
     }
     this.setState({loading: false})
   }
