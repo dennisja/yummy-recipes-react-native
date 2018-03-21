@@ -21,6 +21,7 @@ class AddCategory extends Component {
     if(response){
         // tell user that he or she has successfuly added a category
         this.props.onAddCategory(response)
+        return;
     }
     this.setState({loading: false})
   }

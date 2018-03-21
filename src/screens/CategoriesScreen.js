@@ -65,7 +65,14 @@ class CategoriesScreen extends Component {
 
   onAddCategory = async response => {
     this._hideModal()
-    await this._fetchCategories()
+    const cat = response.recipe_cat
+    await this.setState({ loadingCategories: false })
+    this.setState(prevState => ({
+      categories: [
+        cat,
+        ...prevState.categories.filter(category => category.id !== cat.id)
+      ]
+    }))
     // tell user that he/she has added a category
     console.log(response)
   }
@@ -108,11 +115,10 @@ class CategoriesScreen extends Component {
 
   handleDeleteCategory = async categoryId => {
     const response = await deleteCategory(categoryId, this.handleErrors)
-    if(response){
-      this._fetchCategories();
+    if (response) {
+      this._fetchCategories()
       console.log(response)
     }
-    return;
   }
 
   onPressEditCategory = selectedCategory => {
