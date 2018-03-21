@@ -20,7 +20,7 @@ export const createCategory = async (data, callback) =>
    * @param {function} callback The function to handle errors
    */
 export const editCategory = async (data, categoryId, callback) =>
-  await editOrCreate(`${categoriesUrl}${categoryId}`, data, callback)
+  await editOrCreate(`${categoriesUrl}${categoryId}`, data, callback,"PUT")
 
 /**
  * Deletes a category whose id is given

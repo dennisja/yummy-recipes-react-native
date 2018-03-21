@@ -1,25 +1,27 @@
 import React, { Component } from 'react'
 import { View, Text } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
-import {Header} from 'react-native-elements';
-import { getCategories, getCategory } from '../api/Categories';
+import { Header } from 'react-native-elements'
+import { getCategories, getCategory } from '../api/Categories'
+import AddCategoryForm from '../components/category/AddCategory'
+import EditCategoryForm from '../components/category/EditCategory'
 class CategoriesScreen extends Component {
   static navigationOptions = {
     drawerIcon: ({ tintColor }) => (
       <FontAwesome name='tags' size={24} color={tintColor} />
     ),
-    header: null,
+    header: null
   }
 
-  handleErrors(errors){
-    console.log(errors);
+  handleErrors (errors) {
+    console.log(errors)
   }
 
   componentDidMount = async () => {
     const response = await getCategories(this.handleErrors)
-    console.log(await getCategory(19, this.handleErrors));
-  };
-  
+    console.log(await getCategory(22, this.handleErrors))
+  }
+
   render () {
     return (
       <View>
@@ -31,7 +33,8 @@ class CategoriesScreen extends Component {
           }}
           centerComponent={{ text: 'Categories', style: { color: '#fff' } }}
         />
-        <Text> Categories screen </Text>
+        <AddCategoryForm />
+        <EditCategoryForm categoryId={22} categoryName={'Latest Edited'}/>
       </View>
     )
   }
